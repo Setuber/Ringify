@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Ringify" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*">
+	<Role name="Ringify.Web">
+		<Instances count="1" />
+		<ConfigurationSettings>
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+			<Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
+			<Setting name="ContainerSASExperiationTime" value="10" />
+			<Setting name="BlobSASExperiationTime" value="10" />
+
+
+			<Setting name="realm" value="uri:ringify" />
+			<Setting name="serviceKey" value="Jxbpz5mSValoVkb7l9DoCgLKaNA+zenzzBBq3S4KFuo=" />
+			<Setting name="trustedIssuersIdentifier" value="https://ringify.accesscontrol.windows.net/" />
+			<Setting name="trustedIssuerName" value="Ringify" />
+
+		</ConfigurationSettings>
+		<Certificates>
+			<Certificate name="SslCertificate" thumbprint="F8ACE24A36F93B006BFAF495F6C14FB827AC61A3" thumbprintAlgorithm="sha1" />
+
+		</Certificates>
+	</Role>
+</ServiceConfiguration>
