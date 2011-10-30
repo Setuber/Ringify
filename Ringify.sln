@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ringify.Web", "Ringify\Ringify.Web\Ringify.Web.csproj", "{743F9247-A460-46C6-BFCF-B173A91EE1DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ringify.Phone", "Ringify\Ringify.Phone\Ringify.Phone.csproj", "{68403CB8-1A89-4FF7-AA59-09A2B3075F22}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Ringify", "Ringify\Ringify\Ringify.ccproj", "{63B51971-1FC2-424F-8CD1-F23BF3A241AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{743F9247-A460-46C6-BFCF-B173A91EE1DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743F9247-A460-46C6-BFCF-B173A91EE1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743F9247-A460-46C6-BFCF-B173A91EE1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743F9247-A460-46C6-BFCF-B173A91EE1DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68403CB8-1A89-4FF7-AA59-09A2B3075F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68403CB8-1A89-4FF7-AA59-09A2B3075F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68403CB8-1A89-4FF7-AA59-09A2B3075F22}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{68403CB8-1A89-4FF7-AA59-09A2B3075F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68403CB8-1A89-4FF7-AA59-09A2B3075F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68403CB8-1A89-4FF7-AA59-09A2B3075F22}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{63B51971-1FC2-424F-8CD1-F23BF3A241AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B51971-1FC2-424F-8CD1-F23BF3A241AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B51971-1FC2-424F-8CD1-F23BF3A241AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B51971-1FC2-424F-8CD1-F23BF3A241AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
