@@ -1,0 +1,73 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Ringify.Pages.SongPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    d:DataContext="{d:DesignData ../SampleData/PickASong.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    xmlns:local="clr-namespace:Ringify"
+    local:TiltEffect.IsTiltEnabled="True" Loaded="PhoneApplicationPage_Loaded">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Name="SongPivot" Title="RINGIFY" SelectionChanged="Pivot_SelectionChanged">
+            <!--Pivot item one-->
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="songs" x:Name="PivotItem_Songs" Margin="12,28,12,1">
+                <Grid>
+                    <ListBox ItemsSource="{Binding SongList}" Height="537" HorizontalAlignment="Left" VerticalAlignment="Top" Width="480">
+                    
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Tag="{Binding SongTitle}" BorderThickness="0" Click="GoToEdit" Width="460" HorizontalContentAlignment="Left">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Grid Height="62" Width="62"  Margin="0,6,8,0" Background="{StaticResource PhoneAccentBrush}">
+                                            <Image Source="/Images/Icon_Download.png" Visibility="{Binding ShowProgressBar}" Height="62" Width="62" Margin="0" />
+                                            <Image Source="/Images/Icon_Ringify.png"  Visibility="{Binding HideProgressBar}" Height="62" Width="62" Margin="0" />
+                                        </Grid> 
+                                        <StackPanel Name="StackPanel1" Orientation="Vertical" Width="460">
+                                        <TextBlock FontSize="40" Text="{Binding SongTitleTrimmed}" />
+                                        <TextBlock FontSize="16" Text="{Binding Album}" />
+                                            <ProgressBar Visibility="{Binding ShowProgressBar}" IsIndeterminate="False" Value="{Binding DownloadProgress}" />
+                                        </StackPanel>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                    <local:RingifyLogo HorizontalAlignment="Center" x:Name="RingifyLogo_OnlineSongPanel" VerticalAlignment="Center" />
+                </Grid>
+            </controls:PivotItem>
+            
+            <!--Pivot item three-->
+            <controls:PivotItem Header="recorded" Name="PivotItem_Recorded">
+              
+                <Grid>
+                    <local:RingifyLogo HorizontalAlignment="Center" x:Name="RingifyLogo_RocordedPanel" VerticalAlignment="Center" />
+                </Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton  IconUri="/Images/appbar.refresh.rest.png" Text="refresh" Click="ApplicationBarIconButton_Refresh_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <!--shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/-->
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+    
+</phone:PhoneApplicationPage>

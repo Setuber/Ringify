@@ -1,0 +1,65 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Ringify.edit_ringtone"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rs="clr-namespace:RangeSlider;assembly=RangeSlider"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True" 
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:local="clr-namespace:Ringify"
+    local:TiltEffect.IsTiltEnabled="True"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="RINGIFY" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="edit ringtone" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ProgressBar IsIndeterminate="True" IsEnabled="false" Name="progressBar1" Width="426" Margin="15,0,15,34" Height="44" VerticalAlignment="Bottom" />
+            <StackPanel HorizontalAlignment="Left" Margin="0" Name="stackPanel1" VerticalAlignment="Top">
+                <TextBlock  Height="30" Name="TextBlock_SongTitle" Text="Ring Name" Margin="12,0,12,0" />
+                <TextBox IsEnabled="False" Height="72" Name="TextBox_SongTitle" Width="460" />
+                <Grid Height="Auto" Name="grid3" Width="Auto">
+                    <TextBlock Height="30" Name="textBlock2" Text="0:00" Margin="12,0,12,0"/>
+                    <TextBlock Height="30" HorizontalAlignment="Right" Margin="12,0,12,0" Name="TextBlock_SongLength" Text="0:00" VerticalAlignment="Top" />
+                </Grid>
+                <rs:RangeSlider IsEnabled="False"  x:Name="Slider" MaximumRangeSpan="39"  Minimum="0" Maximum="240" Margin="12,0,12,0" RangeChanged="Slider_RangeChanged" />
+                <Grid Height="Auto" Name="grid1">
+                    <TextBlock Height="30" Name="textBlock3" Text="Start" Margin="12,0,12,0"/>
+                    <TextBlock Height="30" Name="textBlock4" Text="0:00" Margin="0,-48,12,48" Width="444" TextAlignment="Center" />
+                    <TextBlock Height="30" Name="textBlock5" Text="End" Margin="240,0,12,0"/>
+                </Grid>
+                <Grid Height="Auto" Name="grid2" Width="Auto">
+                    <TextBox IsEnabled="False" Height="72" HorizontalAlignment="Left" Margin="0,0,0,0" Name="TextBox_StartPosition" Text="{Binding StartRing}" VerticalAlignment="Top" Width="230" Padding="0" />
+                    <TextBox IsEnabled="False" Height="72" HorizontalAlignment="Left" Margin="228,0,0,0" Name="TextBox_EndPosition" Text="{Binding EndRing}" VerticalAlignment="Top" Width="230" Padding="0" />
+                </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Button IsEnabled="False" Click ="ControlMedia" Content="Preview" Height="72" Name="Button_PlayPause" Width="230" />
+                    <Button IsEnabled="False" Content="Cancel" Height="72" Name="Button_Cancel" Click="Button_Cancel_Click" Width="229" />
+                </StackPanel>
+                <MediaElement Name="media" Volume="100" AutoPlay="False" MediaOpened="media_MediaOpened" MediaFailed="media_MediaFailed" MediaEnded="media_MediaEnded" />
+                <Button IsEnabled="False" Content="Ringify!" Height="72" Name="Button_Ringify" Width="249" Click="Button_Ringify_Click2" />
+            </StackPanel>
+            <TextBlock Visibility="Collapsed" Height="33" HorizontalAlignment="Left" Margin="19,480,0,0" Name="TextBlock_Error" VerticalAlignment="Top" Width="422" />
+            <Image Height="96" Visibility="Collapsed" HorizontalAlignment="Left" Margin="316,484,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="110" />
+        </Grid>
+    </Grid>
+</phone:PhoneApplicationPage>

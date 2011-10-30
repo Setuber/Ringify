@@ -1,14 +1,68 @@
-﻿namespace Ringify.Phone
-{
-    using System.Windows;
-    using System.Windows.Navigation;
-    using Microsoft.Phone.Controls;
-    using Microsoft.Phone.Shell;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
+namespace Ringify
+{
     public partial class App : Application
     {
-        // Avoid double-initialization
-        private bool phoneApplicationInitialized = false;
+        public static T GetIsolatedStorageSetting<T>(string key)
+        {
+            IDictionary<string, object> isolatedStorage = IsolatedStorageSettings.ApplicationSettings;
+            if (!isolatedStorage.ContainsKey(key))
+            {
+                return default(T);
+            }
+
+            return (T)isolatedStorage[key];
+        }
+
+        public static void SetIsolatedStorageSetting(string key, object value)
+        {
+            IDictionary<string, object> isolatedStorage = IsolatedStorageSettings.ApplicationSettings;
+            if (isolatedStorage.ContainsKey(key))
+            {
+                isolatedStorage.Remove(key);
+            }
+
+            isolatedStorage.Add(key, value);
+        }
+
+        private static SongCollectionViewModel viewModel = null;
+
+        /// <summary>
+        /// A static ViewModel used by the views to bind against.
+        /// </summary>
+        /// <returns>The MainViewModel object.</returns>
+        public static SongCollectionViewModel ViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (viewModel == null)
+                    viewModel = new SongCollectionViewModel();
+
+                return viewModel;
+            }
+        }
+        
+        /// <summary>
+        /// Provides easy access to the root frame of the Phone Application.
+        /// </summary>
+        /// <returns>The root frame of the Phone Application.</returns>
+        public PhoneApplicationFrame RootFrame { get; private set; }
 
         /// <summary>
         /// Constructor for the Application object.
@@ -16,34 +70,40 @@
         public App()
         {
             // Global handler for uncaught exceptions. 
-            UnhandledException += this.Application_UnhandledException;
+            UnhandledException += Application_UnhandledException;
+
+            // Standard Silverlight initialization
+            InitializeComponent();
+
+            // Phone-specific initialization
+            InitializePhoneApplication();
+
+            // Make sure the folders exist
+            IsolatedStorageFile Store = IsolatedStorageFile.GetUserStoreForApplication();
+            if (!Store.DirectoryExists(Strings.Directory_Songs))
+                Store.CreateDirectory(Strings.Directory_Songs);
 
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
-                Application.Current.Host.Settings.EnableFrameRateCounter = true;
+                Application.Current.Host.Settings.EnableFrameRateCounter = false;
 
                 // Show the areas of the app that are being redrawn in each frame.
-                // Application.Current.Host.Settings.EnableRedrawRegions = true;
+                //Application.Current.Host.Settings.EnableRedrawRegions = true;
 
                 // Enable non-production analysis visualization mode, 
-                // which shows areas of a page that are being GPU accelerated with a colored overlay.
-                // Application.Current.Host.Settings.EnableCacheVisualization = true;
+                // which shows areas of a page that are handed off to GPU with a colored overlay.
+                //Application.Current.Host.Settings.EnableCacheVisualization = true;
+
+                // Disable the application idle detection by setting the UserIdleDetectionMode property of the
+                // application's PhoneApplicationService object to Disabled.
+                // Caution:- Use this under debug mode only. Application that disable user idle detection will continue to run
+                // and consume battery power when the user is not using the phone.
+                PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            // Standard Silverlight initialization
-            this.InitializeComponent();
-
-            // Phone-specific initialization
-            this.InitializePhoneApplication();
         }
-
-        /// <summary>
-        /// Provides easy access to the root frame of the Phone Application.
-        /// </summary>
-        /// <returns>The root frame of the Phone Application.</returns>
-        public PhoneApplicationFrame RootFrame { get; private set; }
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
@@ -91,37 +151,36 @@
 
         #region Phone application initialization
 
+        // Avoid double-initialization
+        private bool phoneApplicationInitialized = false;
+
         // Do not add any additional code to this method
         private void InitializePhoneApplication()
         {
-            if (this.phoneApplicationInitialized)
-            {
+            if (phoneApplicationInitialized)
                 return;
-            }
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            this.RootFrame = new PhoneApplicationFrame();
-            this.RootFrame.Navigated += this.CompleteInitializePhoneApplication;
+            RootFrame = new PhoneApplicationFrame();
+            RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures
-            this.RootFrame.NavigationFailed += this.RootFrame_NavigationFailed;
+            RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
             // Ensure we don't initialize again
-            this.phoneApplicationInitialized = true;
+            phoneApplicationInitialized = true;
         }
 
         // Do not add any additional code to this method
         private void CompleteInitializePhoneApplication(object sender, NavigationEventArgs e)
         {
             // Set the root visual to allow the application to render
-            if (this.RootVisual != this.RootFrame)
-            {
-                this.RootVisual = this.RootFrame;
-            }
+            if (RootVisual != RootFrame)
+                RootVisual = RootFrame;
 
             // Remove this handler since it is no longer needed
-            this.RootFrame.Navigated -= this.CompleteInitializePhoneApplication;
+            RootFrame.Navigated -= CompleteInitializePhoneApplication;
         }
 
         #endregion

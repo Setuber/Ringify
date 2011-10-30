@@ -1,0 +1,79 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    <Style x:Key="RingifyProgressBar" TargetType="ProgressBar">
+        <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}"/>
+        <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
+        <Setter Property="Maximum" Value="100"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="Padding" Value="{StaticResource PhoneHorizontalMargin}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid Margin="0,0,0,-24">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Determinate"/>
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard Duration="00:00:04.0" RepeatBehavior="Forever">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="IndeterminateRoot">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="DeterminateRoot">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="SemiCircle_1">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="-45"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:4" Value="675"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="SemiCircle_2">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="-45"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:4" Value="-405"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="SemiCircle_3">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="-45"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:4" Value="315"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimation Duration="0" To="White" Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="Logo_Center_R" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid x:Name="DeterminateRoot" Margin="{TemplateBinding Padding}" Visibility="Visible">
+                            <Rectangle x:Name="ProgressBarIndicator" Fill="{TemplateBinding Foreground}" HorizontalAlignment="Left" Height="4"/>
+                        </Grid>
+                        <Border x:Name="IndeterminateRoot" Margin="{TemplateBinding Padding}" Visibility="Collapsed">
+                            <Grid>
+                                <TextBlock x:Name="Logo_Center_R" TextWrapping="Wrap" Text="R" FontSize="96" VerticalAlignment="Top" Margin="57,8,57,0" d:LayoutOverrides="Width" HorizontalAlignment="Left"/>
+                                <Ellipse x:Name="SemiCircle_1" Margin="37,29.499,35,38.5" Stroke="White" StrokeThickness="5" StrokeDashArray="14.9 200" Width="100" Height="100" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Ellipse.RenderTransform>
+                                        <CompositeTransform Rotation="5.7109999999999985"/>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <Ellipse x:Name="SemiCircle_2" Margin="26.666,19.833,25.333,28.166" Stroke="White" StrokeDashArray="18.049999 200" StrokeThickness="5" Width="120" Height="120" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Ellipse.RenderTransform>
+                                        <CompositeTransform/>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <Ellipse x:Name="SemiCircle_3" Margin="16.997,10.33,15.002,17.669" Stroke="White" StrokeThickness="5" StrokeDashArray="21.200001 200" Width="140" Height="140" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Ellipse.RenderTransform>
+                                        <CompositeTransform/>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Resource dictionary entries should be defined here. -->
+</ResourceDictionary>
